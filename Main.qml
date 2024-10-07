@@ -96,7 +96,7 @@ Window {
             id: background
             source: "qrc:/assets/bg2.png"
             width: 288
-            height: 500
+            height: 520
             fillMode: Image.TileHorizontally
 
             Timer {
@@ -122,7 +122,7 @@ Window {
 
         Image {
             id: ground
-            source: "qrc:/assets/ground.png"
+            source: "qrc:/assets/ground2.png"
             width: 288
             height: 112
             y: parent.height - height
@@ -170,7 +170,9 @@ Window {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Score: 0"
             font.pixelSize: 18
-            color: "Brown"
+            color: "Black"
+            font.bold: true
+            opacity: 0.6
             y: 10
             z: 1
         }
@@ -179,18 +181,22 @@ Window {
         Text {
             id: ready
             anchors.horizontalCenter: parent.horizontalCenter
-            text: "Get Ready !!"
+            text: "Get Ready..."
             font.pixelSize: 35
-            color: "Brown"
+            color: "Black"
+            opacity: 0.5
+            font.bold: true
             y: 60
         }
 
         Text {
             id: gameOver
             anchors.horizontalCenter: parent.horizontalCenter
-            text: "GAME OVER!!!"
+            text: "Game Over!!!"
             font.pixelSize: 35
-            color: "red"
+            color: "Black"
+            opacity: 0.6
+            font.bold: true
             y: -height
             z: 2
 
@@ -206,6 +212,7 @@ Window {
                     if (!running) {
                         endgameMusic.play()
                         scoreListView.visible = false
+                        rectListView.visible = false
                         playAgain.opacity = 1
                         ranking.visible = true
                     }
@@ -217,7 +224,7 @@ Window {
         Row {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: gameOver.bottom
-            anchors.topMargin: 10
+            anchors.topMargin: 5
             spacing: 10
             z: 1
             // Play again button
@@ -236,8 +243,9 @@ Window {
                         endgameMusic.stop()
                         playAgain.opacity = 0
                         gameOver.y = -gameOver.height
-                        ready.opacity = 1
+                        ready.opacity = 0.5
                         scoreListView.visible = false
+                        rectListView.visible = false
                         ranking.visible = false
                         game.destroyPipes()
 
@@ -247,7 +255,6 @@ Window {
                         bird.y = 180
                         bird.rotation = 0
 
-                        //scoreListView.opacity = 0
                         gravity.interval = 9
                     }
                 }
@@ -267,6 +274,7 @@ Window {
                     onClicked: {
                         playAgain.opacity = 1
                         scoreListView.visible = true
+                        rectListView.visible = true
                     }
                 }
             }
@@ -366,34 +374,49 @@ Window {
         loops: 1
     }
 
-    //list view
-    ListView {
-        id: scoreListView
+    Rectangle {
+        id: rectListView
+        color: "white"
+        opacity: 0.5
         width: parent.width * 0.8
         height: 150
         anchors.centerIn: parent
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottomMargin: 10
-        model: scoreListModel
+        border.color: "black"
+        border.width: 2
         visible: false
-        z: 3
-        delegate: Item {
-            width: scoreListView.width
-            height: 30
+        z: 0
+        //list view
+        ListView {
+            id: scoreListView
+            width: parent.width * 0.8
+            height: 150
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.horizontalCenterOffset: -20
+            model: scoreListModel
+            visible: false
+            z: 3
 
-            RowLayout {
-                anchors.fill: parent
-                Text {
-                    opacity: 0.7
-                    text: "Score: " + score
-                    font.pixelSize: 12
-                    horizontalAlignment: Text.AlignHCenter
-                }
-                Text {
-                    opacity: 0.7
-                    text: " Date: " + datetime
-                    font.pixelSize: 12
-                    horizontalAlignment: Text.AlignHCenter
+            delegate: Item {
+                width: scoreListView.width
+                height: 30
+
+                RowLayout {
+                    anchors.fill: parent
+
+                    Text {
+
+                        text: "Score: " + score
+                        font.pixelSize: 12
+                        horizontalAlignment: Text.AlignHCenter
+                    }
+                    Text {
+
+                        text: " Date: " + datetime
+                        font.pixelSize: 12
+                        horizontalAlignment: Text.AlignHCenter
+                    }
                 }
             }
         }

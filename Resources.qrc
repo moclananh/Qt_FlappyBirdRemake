@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/assets">
+        <file>pipe.png</file>
+        <file>bird.png</file>
+        <file>bg2.png</file>
+        <file>ground.png</file>
+        <file>heli.png</file>
+        <file>playagain.png</file>
+        <file>rankbtn.png</file>
+        <file>vn3.jpg</file>
+    </qresource>
+    <qresource prefix="/musics">
+        <file>endgame.wav</file>
+        <file>birdflap.wav</file>
+        <file>bgm.wav</file>
+    </qresource>
+</RCC>
